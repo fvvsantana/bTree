@@ -6,7 +6,7 @@
 
 using namespace std;
 
-typedef string key_t;
+typedef int key_t;
 
 class BTree{
     private:
