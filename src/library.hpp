@@ -2,12 +2,14 @@
 #define LIBRARY_HPP
 
 #include <string>
+#include <fstream>
+#include <iostream>
 #include "../inc/bTree.hpp"
 
-typedef int key_t;
+typedef string key_t;
 
 typedef struct{
-    key_t id;
+    string id;
     string title;
     string genre;
 } Song;
