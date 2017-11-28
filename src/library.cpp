@@ -16,7 +16,7 @@ void Library::generateIndex(){
 }
 
 //insert the song in the btree and in the datafile
-void Library::insertSong(Song* song){
+void Library::insertSong(Song song){
 	//Creates a filestram
 	fstream dFile;
 	//Opens the file in append mode
@@ -27,7 +27,7 @@ void Library::insertSong(Song* song){
 	dFile << size << '|' << song.getId() << '|' << song.getTitle() << '|' << song.getGenre() << '|';
 	//Close the file
 	dFile.close();
-	
+
 }
 
 Song* Library::searchSong(key_t id){
