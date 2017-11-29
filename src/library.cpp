@@ -2,8 +2,8 @@
 
 //constructor
 Library::Library(){
-    tree = new BTree("../library.idx");
-    dataFile = "../library.dat";
+    tree = new BTree("arvore.idx");
+    dataFile = "dados.dad";
 }
 
 //destructor
