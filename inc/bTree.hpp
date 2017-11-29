@@ -1,7 +1,9 @@
 #ifndef BTREE_HPP
 #define BTREE_HPP
 
+#include <iostream>
 #include <string>
+#include <fstream>
 #define BT_ORDER 5
 
 using namespace std;
@@ -10,10 +12,6 @@ typedef int key_t;
 
 class BTree{
     private:
-        typedef struct{
-            //indicate if the index is updated regarding to the datafile
-            bool updated;
-        } Header;
 
         typedef struct{
             //key
@@ -34,12 +32,15 @@ class BTree{
         } Node;
 
         //index file url
-        string indexFile;
+        const char* indexFile;
+        
+        //rrn of tree root node
+        int root;
 
     public:
 
         //constructor
-        BTree(string url);
+        BTree(const char* url);
 
         void insertIndex(key_t id, int byteOS);
 
