@@ -238,8 +238,9 @@ int BTree::insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild){
 
 		page = readPage(rrn);
 		//Search for the position of the new index
-		while (pos < page.nIndexes && page.index[pos].key < toAdd.key)
-			pos++;
+		//while (pos < page.nIndexes && page.index[pos].key < toAdd.key)
+			//pos++;
+		binarySearch(page, toAdd.key, pos);
 		//If an index with the requested key already exists, returns erro
 		if (page.index[pos].key == toAdd.key)
 			return -1;
@@ -324,4 +325,29 @@ void BTree::split(Index &index, int &rrn, Node &page, Index &promoIndex, int &pr
 	newPage.children[i - BT_ORDER/2 - 1] = extraChildren[i];
 	//Return the rrn where the page was written
 	promoChild = writePage(newPage);
+}
+
+//Realize a binary search on a page.
+//Return true if the key already exists and false if it doesn't
+//The pos argument gets the position where the key is or where it should be
+bool BTree::binarySearch(Node page, int key, int &pos){
+	int left = 0;
+	int right = page.nIndexes - 1;
+	int middle;
+
+	while(left <= right){
+		middle = (left + right)/2;
+
+		if(page.index[middle].key == key){
+			pos = middle;
+			return true;
+		}
+		else if (page.index[middle].key > key)
+			right = middle - 1;
+
+		else
+			left = middle + 1;
+	}
+	pos  = middle;
+	return false;
 }

@@ -78,6 +78,8 @@ class BTree{
         int insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild);
 
         void split(Index &key, int &rrn, Node &page, Index &promoIndex, int &promoChild, Node &newPage);
+
+        bool binarySearch(Node page, int key, int &pos);
 };
 
 #endif /* end of include guard: BTREE_HPP */
