@@ -31,7 +31,7 @@ void Library::generateIndex(){
 		//Insert id and byte offset in index
 		tree->insertIndex(id, startRegisty);
 		//Go to the next registry
-		dFile.seekg(registrySize);
+		dFile.seekg(registrySize, ios_base::beg);
 	}
 	//Close the file
 	dFile.close();
@@ -61,5 +61,5 @@ void Library::removeSong(key_t id){
 }
 
 void Library::showBTree(){
-	
+
 }
