@@ -12,7 +12,29 @@ Library::~Library(){
 }
 
 void Library::generateIndex(){
+	//Creat a filestrem
+	fstream dFile;
+	//Open the file in read mode
+	dFile.open(dataFile.data(), fstream::in);
 
+	int startRegisty, registrySize, id;
+	char pipe;
+
+	//Goes through the file
+	while(!dFile.eof()){
+		//Recive the registry size and a pipe
+		dFile >> registrySize >> pipe;
+		//Save the registry byteoffset
+		startRegisty = (int)dFile.tellg();
+		//Read the id song and a pipe
+		dFile >> id >> pipe;
+		//Insert id and byte offset in index
+		tree->insertIndex(id, startRegisty);
+		//Go to the next registry
+		dFile.seekg(registrySize);
+	}
+	//Close the file
+	dFile.close();
 }
 
 //insert the song in the btree and in the datafile
@@ -39,5 +61,5 @@ void Library::removeSong(key_t id){
 }
 
 void Library::showBTree(){
-
+	
 }
