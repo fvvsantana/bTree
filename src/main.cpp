@@ -14,6 +14,43 @@ void TrocaCor(int x){
     SetConsoleTextAttribute(hConsole, x);
 }
 
+
+//funcao com objetivo de gerenciar o menu
+void GerenciaMenu(int menu){
+    system("cls");
+    //gerencia qual funcao deverá ser chamada de acordo com o escolhido no menu
+    switch(menu){
+        //Cria Indice
+        case 1:
+            cout<<endl<<"Funcao de Criar Indice, aperte ENTER para prosseguir.";
+            getchar();
+        break;
+        //Insere Musica
+        case 2:
+            cout<<endl<<"Funcao de Inserir Musica, aperte ENTER para prosseguir.";
+            getchar();
+        break;
+        //Pesquisar Musica
+        case 3:
+            cout<<endl<<"Funcao de Procurar uma Musica, aperte ENTER para prosseguir.";
+            getchar();
+        break;
+        //Remover Musica
+        case 4:
+            cout<<endl<<"Funcao de Remover uma Musica, aperte ENTER para prosseguir.";
+            getchar();
+        break;
+        //Mostrar Arvore B
+        case 5:
+            cout<<endl<<"Funcao para Mostrar a B-tree, aperte ENTER para prosseguir.";
+            getchar();
+        break;
+    }
+
+
+
+}
+
 //funçao que printa o menu inicial
 void PrintaMenu(int menu){
     //Indice
@@ -110,7 +147,7 @@ int main(int argc, char *argv[]){
             case 13:
                 //fim do programa nesse caso
                 if (menu==TAM) c=27;
-                //else GerenciaMenu(menu);
+                else GerenciaMenu(menu);
             break;
 
             }
