@@ -32,7 +32,7 @@ void Log::writeLog(string text){
 		  << setfill('0') << setw(2) << now->tm_mon + 1 << '-' << now->tm_year + 1900 << "   "
 		  << setfill('0') << setw(2) << now->tm_hour << ':' 
 		  << setfill('0') << setw(2) << now->tm_min << ':'
-		  << setfill('0') << setw(2) << now->tm_sec << "(GMT)" << "   "
+		  << setfill('0') << setw(2) << now->tm_sec << "   "
 		  << text.data() << "\n";
 	//Close the file
 	lFile.close();

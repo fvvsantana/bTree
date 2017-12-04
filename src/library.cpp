@@ -18,13 +18,13 @@ void Library::generateIndex(){
 	//Open the file in read mode
 	dFile.open(dataFile.data(), fstream::in);
 
-	logFile->createIndexLog("ola", getDataFile());
+	logFile->createIndexLog(tree->getIndexFile(), getDataFile());
 
 	int startRegisty, registrySize, id;
 	char pipe;
 
 	//Goes through the file
-	while(!dFile.eof()){
+	while((int)dFile.tellg() != -1){
 		//Recive the registry size and a pipe
 		dFile >> registrySize >> pipe;
 		//Save the registry byteoffset
@@ -34,7 +34,7 @@ void Library::generateIndex(){
 		//Insert id and byte offset in index
 		tree->insertIndex(id, startRegisty);
 		//Go to the next registry
-		dFile.seekg(registrySize, ios_base::beg);
+		dFile.seekg(registrySize + integerDigits(registrySize), ios_base::beg);
 	}
 	//Close the file
 	dFile.close();
