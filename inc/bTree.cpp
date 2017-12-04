@@ -1,8 +1,9 @@
 #include "bTree.hpp"
 
 // BTree constructor, receives file url
-BTree::BTree(const char* url){
+BTree::BTree(const char* url, Log* logFile){
     indexFile = url;
+    this->logFile = logFile;
 }
 
 void BTree::insertIndex(key_t id, int byteOS){
@@ -15,8 +16,8 @@ void BTree::insertIndex(key_t id, int byteOS){
 
 	switch(createFile()){
 		case -1:
-			//Error log
-			break;
+			logFile->createFileErrorLog();
+			return;
 
 		case 0:
 			//Change update bit and initialize root to rrn 0
@@ -50,7 +51,8 @@ void BTree::insertIndex(key_t id, int byteOS){
 			Index promoIndex;
 			int promoChild;
 			//Insert an index at the tree
-			if (insert(header.rrnRoot, indexRecived, promoIndex, promoChild) == 1){
+			int insertReturn = insert(header.rrnRoot, indexRecived, promoIndex, promoChild);
+			if (insertReturn == 1){
 				Node newRoot;
 				//If a promotion occurred, a new root is created
 				createLeaf(newRoot);
@@ -65,9 +67,14 @@ void BTree::insertIndex(key_t id, int byteOS){
 				//Write the file and update the header with tthe new root
 				updateHeader(true, writePage(newRoot));
 			}
+			else if(insertReturn == -1){
+				logFile->insertDuplicated(id);
+				return;
+			}
 			break;
 	};
 
+	logFile->insertSuccesLog(id);
 }
 
 //return the byte offset of the searched block in the datafile
@@ -239,9 +246,9 @@ int BTree::insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild){
 
 		page = readPage(rrn);
 		//Search for the position of the new index
-		//while (pos < page.nIndexes && page.index[pos].key < toAdd.key)
-			//pos++;
-		binarySearch(page, toAdd.key, pos);
+		while (pos < page.nIndexes && page.index[pos].key < toAdd.key)
+			pos++;
+		//binarySearch(page, toAdd.key, pos);
 		//If an index with the requested key already exists, returns erro
 		if (page.index[pos].key == toAdd.key)
 			return -1;
@@ -272,16 +279,19 @@ int BTree::insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild){
 		}
 		//If promotion occurred
 		else{
+			logFile->nodeDivisionLog(rrn);
 			//A split happens
 			split(promoBottomIndex, promoBottomChild, page, promoIndex, promoChild, newPage);
 			//Write in the file
 			writePage(page, rrn);
+			logFile->promotionLog(promoIndex.key);
 			return 1;
 		}
 	}
 }
 
 void BTree::split(Index &index, int &rrn, Node &page, Index &promoIndex, int &promoChild, Node &newPage){
+
 	//Temporary arrays
 	Index extraIndex[BT_ORDER];
 	int extraChildren[BT_ORDER + 1];
@@ -351,4 +361,9 @@ bool BTree::binarySearch(Node page, int key, int &pos){
 	}
 	pos  = middle;
 	return false;
+}
+
+string BTree::getIndexFile(){
+	string url(indexFile);
+	return url;
 }

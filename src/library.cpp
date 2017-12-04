@@ -2,8 +2,9 @@
 
 //constructor
 Library::Library(){
-    tree = new BTree("arvore.idx");
     dataFile = "dados.dad";
+    logFile = new Log("log_clima.txt");
+    tree = new BTree("arvore.idx", logFile);
 }
 
 //destructor
@@ -16,6 +17,8 @@ void Library::generateIndex(){
 	fstream dFile;
 	//Open the file in read mode
 	dFile.open(dataFile.data(), fstream::in);
+
+	logFile->createIndexLog("ola", getDataFile());
 
 	int startRegisty, registrySize, id;
 	char pipe;
@@ -39,14 +42,17 @@ void Library::generateIndex(){
 
 //insert the song in the btree and in the datafile
 void Library::insertSong(Song song){
+
+	logFile->insertSongLog(song.id, song.title, song.genre);
+
 	//Creates a filestram
 	fstream dFile;
 	//Opens the file in append mode
 	dFile.open(dataFile.data(), fstream::app);
 	//Calculates the char amount
-	int size = song.integerDigits(song.getId()) + song.getTitle().length() + song.getGenre().length() + 4;
+	int size = integerDigits(song.id) + song.title.length() + song.genre.length() + 4;
 	//Writes on file
-	dFile << size << '|' << song.getId() << '|' << song.getTitle() << '|' << song.getGenre() << '|';
+	dFile << size << '|' << song.id << '|' << song.title << '|' << song.genre << '|';
 	//Close the file
 	dFile.close();
 
@@ -62,4 +68,17 @@ void Library::removeSong(key_t id){
 
 void Library::showBTree(){
 
+}
+string Library::getDataFile(){
+	return dataFile;
+}
+
+int Library::integerDigits(int id){
+	int counter = 1;
+	while (id >= 10){
+		
+		id /= 10;
+		counter++;
+	}
+	return counter;
 }
