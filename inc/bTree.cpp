@@ -7,8 +7,6 @@ BTree::BTree(const char* url){
 
 void BTree::insertIndex(key_t id, int byteOS){
 
-	Header header;
-
 	Index indexRecived;
 	indexRecived.key = id;
 	indexRecived.byteOS = byteOS;
@@ -40,12 +38,9 @@ void BTree::insertIndex(key_t id, int byteOS){
 			//Update header
 			updateHeader(false);
 
-			fstream bTree;
-			//Open the file
-			bTree.open(indexFile, fstream::in| fstream::binary);
 			//Read the header
-			bTree.read((char*)&header, sizeof(header));
-			bTree.close();
+			Header header = readHeader();
+
 			//return variable
 			Index promoIndex;
 			int promoChild;
@@ -348,10 +343,7 @@ bool BTree::binarySearch(Node page, int key, int &pos){
 	return false;
 }
 
-void BTree::printTree() {
-    // print initial phrase
-    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
-
+BTree::Header BTree::readHeader() {
     // open the file
     fstream bTree;
     bTree.open(indexFile, fstream::in| fstream::binary);
@@ -360,6 +352,16 @@ void BTree::printTree() {
     Header header;
     bTree.read((char*)&header, sizeof(header));
     bTree.close();
+
+    return header;
+}
+
+void BTree::printTree() {
+    // print initial phrase
+    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
+
+    // read the header
+    Header header = readHeader();
 
     // create a queue of nodes to print
     Queue queue;

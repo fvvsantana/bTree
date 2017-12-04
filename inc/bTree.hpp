@@ -62,7 +62,9 @@ class BTree{
 
         void updateHeader(int root);
 
-        BTree::Node readPage(int rrn);
+        Header readHeader();
+
+        Node readPage(int rrn);
 
         void writePage(Node node, int rrn);
 
