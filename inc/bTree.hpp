@@ -15,6 +15,13 @@ class BTree{
     private:
 
         typedef struct{
+            //indicate if the index is updated regarding to the datafile
+            bool updated;
+            //store rrn root
+            int rrnRoot;
+        } Header;
+
+        typedef struct{
             //key
             key_t key;
             //byte offset in the data file

@@ -2,44 +2,7 @@
 
 // BTree constructor, receives file url
 BTree::BTree(const char* url){
-
     indexFile = url;
-
-    // try to open the file
-    fstream fs;
-    fs.open(url, fstream::in);
-
-    // verify if the file was opened successfully
-    if (fs.is_open()) {
-
-    	cout << "Arquivo " << url << " aberto com sucesso";
-
-    	// read root rrn
-    	fs >> root;
-    	cout << root;
-    }
-    else {
-    	// an error occurred, maybe the file does not exist
-    	cout << " Erro ao abrir o arquivo " << url << ", tentando criar um novo..." << endl;
-
-    	// create a new file
-    	fs.open(url, fstream::out);
-
-    	// verify again
-    	if (fs.is_open()) {
-
-    		cout << " Arquivo criado com sucesso." << endl;
-
-    		// set root as 0 and save to file
-    		root = 0;
-    		fs << root << endl;
-    	}
-    	else {
-    		cout << " Erro ao criar o arquivo, possivelmente erro de permissao." << endl;
-    	}
-    }
-
-    fs.close();
 }
 
 void BTree::insertIndex(key_t id, int byteOS){
@@ -79,7 +42,7 @@ void BTree::insertIndex(key_t id, int byteOS){
 
 			fstream bTree;
 			//Open the file
-			bTree.open(indexFile.data(), fstream::in| fstream::binary);
+			bTree.open(indexFile, fstream::in| fstream::binary);
 			//Read the header
 			bTree.read((char*)&header, sizeof(header));
 			bTree.close();
@@ -120,7 +83,7 @@ void BTree::removeIndex(key_t id){
 void BTree::updateHeader(bool updated, int root){
 	fstream bTree;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::out|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::out|fstream::binary);
 
 	Header header;
 
@@ -136,7 +99,7 @@ void BTree::updateHeader(bool updated, int root){
 void BTree::updateHeader(bool updated){
 	fstream bTree;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::out|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::out|fstream::binary);
 
 	Header header;
 
@@ -155,7 +118,7 @@ void BTree::updateHeader(bool updated){
 void BTree::updateHeader(int root){
 	fstream bTree;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::out|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::out|fstream::binary);
 
 	Header header;
 
@@ -180,7 +143,7 @@ BTree::Node BTree::readPage(int rrn){
 
 	Node page;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::binary);
 
 	bTree.seekg(sizeof(Header) + rrn * sizeof(Node), ios_base::beg);
 
@@ -195,7 +158,7 @@ BTree::Node BTree::readPage(int rrn){
 void BTree::writePage(Node page, int rrn){
 	fstream bTree;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::out|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::out|fstream::binary);
 
 	bTree.seekg(sizeof(Header) + rrn * sizeof(Node), ios_base::beg);
 
@@ -211,7 +174,7 @@ int BTree::writePage(Node page){
 
 	fstream bTree;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::out|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::out|fstream::binary);
 
 	bTree.seekg(0, ios_base::end);
 
@@ -241,14 +204,14 @@ void BTree::createLeaf(Node &page){
 int BTree::createFile(){
 	fstream bTree;
 
-	bTree.open(indexFile.data(), fstream::in|fstream::binary);
+	bTree.open(indexFile, fstream::in|fstream::binary);
 
 	if (!bTree){
-		bTree.open(indexFile.data(), fstream::out|fstream::binary);
-		
+		bTree.open(indexFile, fstream::out|fstream::binary);
+
 		if (!bTree)
 			return -1;
-		
+
 		bTree.close();
 		return 0;
 	}
@@ -335,7 +298,7 @@ void BTree::split(Index &index, int &rrn, Node &page, Index &promoIndex, int &pr
 	while (i > 0 && extraIndex[i - 1].key > index.key){
 		extraIndex[i] = extraIndex[i - 1];
 		extraChildren[i + 1] = extraChildren[i];
-		i--; 
+		i--;
 	}
 	//Add the new index in its position
 	extraIndex[i] = index;
