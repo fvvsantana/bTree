@@ -2,15 +2,12 @@
 #define LIBRARY_HPP
 
 #include <string>
+#include <fstream>
+#include <iostream>
 #include "../inc/bTree.hpp"
+#include "song.hpp"
 
 typedef int key_t;
-
-typedef struct{
-    key_t id;
-    string title;
-    string genre;
-} Song;
 
 class Library{
     private:
@@ -27,7 +24,7 @@ class Library{
         void generateIndex();
 
         //insert the song in the btree and in the datafile
-        void insertSong(Song& song);
+        void insertSong(Song song);
 
         Song* searchSong(key_t id);
 
