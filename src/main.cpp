@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//Muda a cor das letras na tela de saida
+//Change the statements' color
 void TrocaCor(int x){
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -15,32 +15,32 @@ void TrocaCor(int x){
 }
 
 
-//funcao com objetivo de gerenciar o menu
+//menu management function
 void GerenciaMenu(int menu){
     system("cls");
-    //gerencia qual funcao deverá ser chamada de acordo com o escolhido no menu
+    //manages the menu from the menu variable
     switch(menu){
-        //Cria Indice
+        //Create index
         case 1:
             cout<<endl<<"Funcao de Criar Indice, aperte ENTER para prosseguir.";
             getchar();
         break;
-        //Insere Musica
+        //Insert Music
         case 2:
             cout<<endl<<"Funcao de Inserir Musica, aperte ENTER para prosseguir.";
             getchar();
         break;
-        //Pesquisar Musica
+        //Search Music
         case 3:
             cout<<endl<<"Funcao de Procurar uma Musica, aperte ENTER para prosseguir.";
             getchar();
         break;
-        //Remover Musica
+        //Remove Music
         case 4:
             cout<<endl<<"Funcao de Remover uma Musica, aperte ENTER para prosseguir.";
             getchar();
         break;
-        //Mostrar Arvore B
+        //Show B tree
         case 5:
             cout<<endl<<"Funcao para Mostrar a B-tree, aperte ENTER para prosseguir.";
             getchar();
@@ -51,9 +51,9 @@ void GerenciaMenu(int menu){
 
 }
 
-//funçao que printa o menu inicial
+//Print Menu Function
 void PrintaMenu(int menu){
-    //Indice
+    //Index
     if(menu==1){
         cout << endl << "------->";
         TrocaCor(240);
@@ -62,7 +62,7 @@ void PrintaMenu(int menu){
     }else{
         cout<<endl<<"\t1. Criar Indice";
     }
-    //Inserir Musica
+    //Insert Music
     if(menu==2){
         cout<<endl<<"------->";
         TrocaCor(240);
@@ -71,7 +71,7 @@ void PrintaMenu(int menu){
     }else{
         cout<<endl<<"\t2. Inserir Musica";
     }
-    // Pesquisar por uma Musica
+    // Search Music
     if(menu==3){
         cout<<endl<<"------->";
         TrocaCor(240);
@@ -80,7 +80,7 @@ void PrintaMenu(int menu){
     }else{
         cout<<endl<<"\t3. Pesquisar Musica por ID";
     }
-    // Remover uma musica
+    // Remove Music
     if(menu==4){
         cout<<endl<<"------->";
         TrocaCor(240);
@@ -89,7 +89,7 @@ void PrintaMenu(int menu){
     }else{
         cout<<endl<<"\t4. Remover Musica por ID";
     }
-    // Printar a arvore
+    // Print B tree
     if(menu==5){
         cout<<endl<<"------->";
         TrocaCor(240);
@@ -99,7 +99,7 @@ void PrintaMenu(int menu){
         cout<<endl<<"\t5. Mostrar Arvore";
     }
 
-    //Fechar o programa
+    //Close the program
     if(menu==6){
         cout<<endl<<"------->";
         TrocaCor(240);
@@ -133,19 +133,19 @@ int main(int argc, char *argv[]){
 
         c = getch();
             switch(c){
-            //caso se seta para baixo
+            //Down arrow
             case 80:
                 if(menu!=TAM) menu++;
             break;
 
-            //caso de seta para cima
+            //Up arrow
             case 72:
                 if(menu!=1) menu--;
             break;
 
-            //caso de tecla enter
+            //Enter
             case 13:
-                //fim do programa nesse caso
+                //Close program if menu it is the case 6
                 if (menu==TAM) c=27;
                 else GerenciaMenu(menu);
             break;
