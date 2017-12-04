@@ -61,5 +61,5 @@ void Library::removeSong(key_t id){
 }
 
 void Library::showBTree(){
-
+    tree->printTree();
 }

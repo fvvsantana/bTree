@@ -1,6 +1,7 @@
 #ifndef BTREE_HPP
 #define BTREE_HPP
 
+#include "queue.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -84,6 +85,8 @@ class BTree{
         void split(Index &key, int &rrn, Node &page, Index &promoIndex, int &promoChild, Node &newPage);
 
         bool binarySearch(Node page, int key, int &pos);
+
+        void printTree();
 };
 
 #endif /* end of include guard: BTREE_HPP */

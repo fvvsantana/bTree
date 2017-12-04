@@ -352,3 +352,51 @@ bool BTree::binarySearch(Node page, int key, int &pos){
 	pos  = middle;
 	return false;
 }
+
+void BTree::printTree() {
+    // print initial phrase
+    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
+
+    // open the file
+    fstream bTree;
+    bTree.open(indexFile, fstream::in| fstream::binary);
+
+    // read the header
+    Header header;
+    bTree.read((char*)&header, sizeof(header));
+    bTree.close();
+
+    // create a queue of nodes to print
+    Queue queue;
+
+    // add the root node
+    queue.push(header.rrnRoot, 0);
+
+    // print elements until queue is empty
+    while (!queue.isEmpty()) {
+
+        // get first queue element
+        int rrn, level;
+        queue.pop(rrn, level);
+
+        // read the node
+        Node node = readPage(rrn);
+
+        // print page level
+        cout << level << ' ';
+
+        // print number of elements
+        cout << node.nIndexes << ' ';
+
+        // print each element
+        for (int i = 0; i < node.nIndexes; i++)
+            cout << '<' << node.index[i].key << '/' << node.index[i].byteOS << "> ";
+        cout << endl;
+
+        // add the children to the queue
+        for (int i = 0; i <= node.nIndexes; i++) {
+            if (node.children[i] != NIL)
+                queue.push(node.children[i], level+1);
+        }
+    }
+}
