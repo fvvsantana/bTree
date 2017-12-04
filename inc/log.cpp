@@ -33,3 +33,85 @@ void Log::writeLog(string text){
 	//Close the file
 	lFile.close();
 }
+
+void Log::createIndexLog(string index, string data){
+	ostringstream ss;
+
+	ss << "Execucao da criacao do arquivo de indice " << index << " com base no arquivo de dados " << data << '.';
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::insertSongLog(int id, string title, string genre){
+	ostringstream ss;
+
+	ss << "Execucao de operacao de INSERCAO de " << id << ", " << title << ", " << genre << '.';
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::nodeDivisionLog(int rrn){
+	ostringstream ss;
+
+	ss << "Divisao de no - pagina " << rrn << '.';
+
+	writeLog(ss.str().c_str());	
+}
+
+void Log::promotionLog(int id){
+	ostringstream ss;
+
+	ss << "Chave " << id << " promovida.";
+
+	writeLog(ss.str().c_str());	
+}
+
+void Log::insertSuccesLog(int id){
+	ostringstream ss;
+
+	ss << "Chave " << id << " inserida com sucesso.";
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::insertDuplicated(int id){
+	ostringstream ss;
+
+	ss << "Chave " << id << " duplicada.";
+
+	writeLog(ss.str().c_str());
+
+}
+
+void Log::searchLog(int id){
+	ostringstream ss;
+
+	ss << "Execucao de operacao de PESQUISA de " << id << '.';
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::searchSuccesLog(int id, int byteOS, string title, string genre){
+	ostringstream ss;
+
+	ss << "Chave " << id << " encontrada, offset " << byteOS << ", Título: " 
+	   << title << ", Genero: " << genre << '.';
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::searchFailLog(int id){
+	ostringstream ss;
+
+	ss << "Chave " << id << " nao encontrada.";
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::createFileErrorLog(){
+	ostringstream ss;
+
+	ss << "Nao foi possivel criar o arquivo de indice";
+
+	writeLog(ss.str().c_str());
+}
