@@ -7,8 +7,6 @@ BTree::BTree(const char* url){
 
 void BTree::insertIndex(key_t id, int byteOS){
 
-	Header header;
-
 	Index indexRecived;
 	indexRecived.key = id;
 	indexRecived.byteOS = byteOS;
@@ -40,12 +38,9 @@ void BTree::insertIndex(key_t id, int byteOS){
 			//Update header
 			updateHeader(false);
 
-			fstream bTree;
-			//Open the file
-			bTree.open(indexFile, fstream::in| fstream::binary);
 			//Read the header
-			bTree.read((char*)&header, sizeof(header));
-			bTree.close();
+			Header header = readHeader();
+
 			//return variable
 			Index promoIndex;
 			int promoChild;
@@ -72,11 +67,28 @@ void BTree::insertIndex(key_t id, int byteOS){
 
 //return the byte offset of the searched block in the datafile
 int BTree::searchIndex(key_t id){
+    // read the header
+    Header header = readHeader();
 
-}
+    // get root node rrn
+    int rrn = header.rrnRoot;
 
-void BTree::removeIndex(key_t id){
+    // search until is a leaf
+    while (rrn != NIL) {
 
+        Node node = readPage(rrn);
+
+        // use binary search on the current page
+        int pos;
+        bool found = binarySearch(node, id, pos);
+
+        if (found)
+            return node.index[pos].byteOS;
+        else
+            rrn = node.children[pos];
+    }
+
+    return -1;
 }
 
 //Change the update state and root  rrn
@@ -131,10 +143,6 @@ void BTree::updateHeader(int root){
 	bTree.write((char*)&header, sizeof(Header));
 
 	bTree.close();
-}
-
-bool BTree::isUpdated(){
-
 }
 
 //Read a page in the file with the specified rrn
@@ -356,10 +364,7 @@ bool BTree::binarySearch(Node page, int key, int &pos){
 	return false;
 }
 
-void BTree::printTree() {
-    // print initial phrase
-    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
-
+BTree::Header BTree::readHeader() {
     // open the file
     fstream bTree;
     bTree.open(indexFile, fstream::in| fstream::binary);
@@ -368,6 +373,16 @@ void BTree::printTree() {
     Header header;
     bTree.read((char*)&header, sizeof(header));
     bTree.close();
+
+    return header;
+}
+
+void BTree::printTree() {
+    // print initial phrase
+    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
+
+    // read the header
+    Header header = readHeader();
 
     // create a queue of nodes to print
     Queue queue;
