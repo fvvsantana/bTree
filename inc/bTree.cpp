@@ -67,7 +67,28 @@ void BTree::insertIndex(key_t id, int byteOS){
 
 //return the byte offset of the searched block in the datafile
 int BTree::searchIndex(key_t id){
+    // read the header
+    Header header = readHeader();
 
+    // get root node rrn
+    int rrn = header.rrnRoot;
+
+    // search until is a leaf
+    while (rrn != NIL) {
+
+        Node node = readPage(rrn);
+
+        // use binary search on the current page
+        int pos;
+        bool found = binarySearch(node, id, pos);
+
+        if (found)
+            return node.index[pos].byteOS;
+        else
+            rrn = node.children[pos];
+    }
+
+    return -1;
 }
 
 //Change the update state and root  rrn
