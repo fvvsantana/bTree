@@ -160,11 +160,16 @@ int main(int argc, char *argv[]){
             //Down arrow
             case 80:
                 if(menu!=TAM) menu++;
+                //If it is in the border, jump to the other side
+                else menu = 1;
             break;
 
             //Up arrow
             case 72:
+
                 if(menu!=1) menu--;
+                //If it is in the border, jump to the other side
+                else menu = 6;
             break;
 
             //Enter
