@@ -56,15 +56,11 @@ class BTree{
         //return the byte offset of the searched block in the datafile
         int searchIndex(key_t id);
 
-        void removeIndex(key_t id);
-
         void updateHeader(bool updated, int root);
 
         void updateHeader(bool updated);
 
         void updateHeader(int root);
-
-        bool isUpdated();
 
         BTree::Node readPage(int rrn);
 

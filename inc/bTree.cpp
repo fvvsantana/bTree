@@ -75,10 +75,6 @@ int BTree::searchIndex(key_t id){
 
 }
 
-void BTree::removeIndex(key_t id){
-
-}
-
 //Change the update state and root  rrn
 void BTree::updateHeader(bool updated, int root){
 	fstream bTree;
@@ -131,10 +127,6 @@ void BTree::updateHeader(int root){
 	bTree.write((char*)&header, sizeof(Header));
 
 	bTree.close();
-}
-
-bool BTree::isUpdated(){
-
 }
 
 //Read a page in the file with the specified rrn
