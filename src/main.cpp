@@ -133,6 +133,30 @@ int main(int argc, char *argv[]){
 
         c = getch();
             switch(c){
+                //case 1
+            case 49:
+                menu = 1;
+            break;
+                //case 2
+            case 50:
+                menu = 2;
+            break;
+                //case 3
+            case 51:
+                menu = 3;
+            break;
+                //case 4
+            case 52:
+                menu = 4;
+            break;
+                //case 5
+            case 53:
+                menu = 5;
+            break;
+                //case 6
+            case 54:
+                menu = 6;
+            break;
             //Down arrow
             case 80:
                 if(menu!=TAM) menu++;
