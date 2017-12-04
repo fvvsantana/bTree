@@ -2,7 +2,10 @@
 #define BTREE_HPP
 
 #include <string>
+#include <fstream>
+#include <iostream>
 #define BT_ORDER 5
+#define NIL -1
 
 using namespace std;
 
@@ -13,6 +16,8 @@ class BTree{
         typedef struct{
             //indicate if the index is updated regarding to the datafile
             bool updated;
+            //store rrn root
+            int rrnRoot;
         } Header;
 
         typedef struct{
@@ -48,9 +53,33 @@ class BTree{
 
         void removeIndex(key_t id);
 
+        void updateHeader(bool updated, int root);
+
         void updateHeader(bool updated);
 
+        void updateHeader(int root);
+
         bool isUpdated();
+
+        BTree::Node readPage(int rrn);
+
+        void writePage(Node node, int rrn);
+
+        int writePage(Node page);
+
+        void createLeaf(Node &page);
+
+        int createFile();
+
+        void addIndexPage(Node &page, Index &toAdd);
+
+        void indexExtended(Index *reciver, Index &toAdd);
+
+        int insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild);
+
+        void split(Index &key, int &rrn, Node &page, Index &promoIndex, int &promoChild, Node &newPage);
+
+        bool binarySearch(Node page, int key, int &pos);
 };
 
 #endif /* end of include guard: BTREE_HPP */
