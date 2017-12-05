@@ -25,17 +25,22 @@ void Library::generateIndex(){
 	char pipe;
 
 	//Goes through the file
-	while((int)dFile.tellg() != -1){
+	while(!dFile.eof()){
 		//Recive the registry size and a pipe
 		dFile >> registrySize >> pipe;
 		//Save the registry byteoffset
 		startRegisty = (int)dFile.tellg();
+		//If outside the file limits, break
+		if (startRegisty == -1)
+			break;
 		//Read the id song and a pipe
 		dFile >> id >> pipe;
 		//Insert id and byte offset in index
 		tree->insertIndex(id, startRegisty);
 		//Go to the next registry
-		dFile.seekg(registrySize + integerDigits(registrySize), ios_base::beg);
+		dFile.seekg(registrySize - dFile.tellg() + startRegisty , ios_base::cur);
+
+		cout << (int)dFile.tellg() << '\n';
 	}
 	//Close the file
 	dFile.close();
@@ -46,24 +51,58 @@ void Library::insertSong(Song song){
 
 	logFile->insertSongLog(song.id, song.title, song.genre);
 
+	if (tree->searchIndex(song.id) == -1){
+		logFile->insertDuplicated(song.id);
+		return;
+	}
+
 	//Creates a filestram
 	fstream dFile;
 	//Opens the file in append mode
 	dFile.open(dataFile.data(), fstream::app);
 	//Calculates the char amount
-	int size = integerDigits(song.id) + song.title.length() + song.genre.length() + 4;
+	int size = integerDigits(song.id) + song.title.length() + song.genre.length() + 3;
 	//Writes on file
-	dFile << size << '|' << song.id << '|' << song.title << '|' << song.genre << '|';
+	dFile << size << '|';
+	int byteOS = dFile.tellg();
+	dFile << song.id << '|' << song.title << '|' << song.genre << '|';
 	//Close the file
 	dFile.close();
 
-}
-
-Song* Library::searchSong(key_t id){
+	tree->insertIndex(song.id, byteOS);
 
 }
 
-void Library::removeSong(key_t id){
+
+Song Library::searchSong(key_t id){
+	Song song;
+	char pipe;
+
+	logFile->searchLog(id);
+	//Search byte offset in index
+	int byteOS = tree->searchIndex(id);
+
+	if (byteOS == -1){
+		logFile->searchFailLog(id);
+		song.id = -1;
+		return song;
+	}
+
+	fstream dFile;
+	//Opens the file in append mode
+	dFile.open(dataFile.data(), fstream::in);
+	//Go to the specified byte offset
+	dFile.seekg(byteOS, ios_base::beg);
+	//Read the song information
+	dFile >> song.id >> pipe ;
+	getline(dFile, song.title, '|');
+	getline(dFile, song.genre, '|');
+
+	dFile.close();
+
+	logFile->searchSuccesLog(song.id, byteOS, song.title, song.genre);
+
+	return song;
 
 }
 

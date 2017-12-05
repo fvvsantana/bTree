@@ -1,12 +1,12 @@
 #include <iostream>
 #include <istream>
-#include <windows.h>
-#include <conio.h>
+//#include <windows.h>
+//#include <conio.h>
 #include "library.hpp"
 
 using namespace std;
 
-//Change the statements' color
+/*//Change the statements' color
 void TrocaCor(int x){
     HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -111,15 +111,46 @@ void PrintaMenu(int menu){
 
 }
 
-
+*/
 int main(int argc, char *argv[]){
 
     //menu
     Library lib;
 
+    Song song1, song2, song3, song4;
+
+    /*song1.id = 326;
+    song1.title = "A chuva";
+    song1.genre = "molhado";
+
+    song2.id = 5144;
+    song2.title = "O sol";
+    song2.genre = "quente";
+
+    song3.id = 215;
+    song3.title = "A lua";
+    song3.genre = "queijo";
+
+    song4.id = 9;
+    song4.title = "O terra";
+    song4.genre = "minhoca";
+
+    lib.insertSong(song1);
+    lib.insertSong(song2);
+    lib.insertSong(song3);
+    lib.insertSong(song4);*/
+
+    lib.generateIndex();
+
+    lib.showBTree();
+
+    song1 = lib.searchSong(5144);
+
+    cout << song1.title << ", " << song1.genre << '\n';
 
 
-    int c,menu=1,TAM=6;
+
+    /*int c,menu=1,TAM=6;
 
     while (c!=27){
 
@@ -182,6 +213,6 @@ int main(int argc, char *argv[]){
     }
     TrocaCor(207);
     cout<<endl<<"Programa finalizado!";
-    TrocaCor(15);
+    TrocaCor(15);*/
     return 0;
-}
+}

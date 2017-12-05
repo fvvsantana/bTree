@@ -34,9 +34,7 @@ class Library{
         //insert the song in the btree and in the datafile
         void insertSong(Song song);
 
-        Song* searchSong(key_t id);
-
-        void removeSong(key_t id);
+        Song searchSong(key_t id);
 
         void showBTree();
 
