@@ -1,9 +1,8 @@
 #include <iostream>
 #include <istream>
-#include "library.hpp"
-#include "song.hpp"
 #include <windows.h>
-#include "conio.h"
+#include <conio.h>
+#include "library.hpp"
 
 using namespace std;
 
@@ -185,4 +184,4 @@ int main(int argc, char *argv[]){
     cout<<endl<<"Programa finalizado!";
     TrocaCor(15);
     return 0;
-}
+}

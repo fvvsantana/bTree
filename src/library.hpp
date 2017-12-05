@@ -5,13 +5,21 @@
 #include <fstream>
 #include <iostream>
 #include "../inc/bTree.hpp"
-#include "song.hpp"
+#include "../inc/log.hpp"
 
 typedef int key_t;
+
+
+typedef struct{
+    key_t id;
+    string title;
+    string genre;
+}Song;
 
 class Library{
     private:
         BTree* tree;
+        Log* logFile;
         string dataFile;
 
     public:
@@ -31,6 +39,10 @@ class Library{
         void removeSong(key_t id);
 
         void showBTree();
+
+        string getDataFile();
+
+        int integerDigits(int id);
 };
 
 #endif /* end of include guard: LIBRARY_HPP */

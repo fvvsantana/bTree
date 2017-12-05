@@ -2,9 +2,11 @@
 #define BTREE_HPP
 
 #include "queue.hpp"
+#include "log.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
+
 #define BT_ORDER 5
 #define NIL -1
 
@@ -42,14 +44,16 @@ class BTree{
 
         //index file url
         const char* indexFile;
-        
+
+        Log *logFile;
+
         //rrn of tree root node
         int root;
 
     public:
 
         //constructor
-        BTree(const char* url);
+        BTree(const char* url, Log* logFile);
 
         void insertIndex(key_t id, int byteOS);
 
@@ -84,7 +88,7 @@ class BTree{
 
         bool binarySearch(Node page, int key, int &pos);
 
-        void printTree();
+        string getIndexFile();
 };
 
 #endif /* end of include guard: BTREE_HPP */

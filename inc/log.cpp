@@ -14,7 +14,11 @@ void Log::writeLog(string text){
 	//Ferify if file exist
 	if(!lFile){
 		lFile.open(logFile.data(), fstream::app);
-		writeLog("Log file created.");
+		if (!lFile){
+			cerr << "Nao foi possivel criar o arquivo de log.\n";
+			return;
+		}
+		writeLog("Arquivo de log criado.");
 	}
 	else{
 		lFile.close();
@@ -28,7 +32,7 @@ void Log::writeLog(string text){
 		  << setfill('0') << setw(2) << now->tm_mon + 1 << '-' << now->tm_year + 1900 << "   "
 		  << setfill('0') << setw(2) << now->tm_hour << ':' 
 		  << setfill('0') << setw(2) << now->tm_min << ':'
-		  << setfill('0') << setw(2) << now->tm_sec << "(GMT)" << "   "
+		  << setfill('0') << setw(2) << now->tm_sec << "   "
 		  << text.data() << "\n";
 	//Close the file
 	lFile.close();
@@ -53,7 +57,7 @@ void Log::insertSongLog(int id, string title, string genre){
 void Log::nodeDivisionLog(int rrn){
 	ostringstream ss;
 
-	ss << "Divisao de no - pagina " << rrn << '.';
+	ss << "Divisao de no - " << rrn << " pagina.";
 
 	writeLog(ss.str().c_str());	
 }
