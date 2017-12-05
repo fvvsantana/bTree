@@ -125,10 +125,10 @@ void printMenu(int menu){
     if(menu==5){
         cout<<endl<<"------->";
         changeColor(240);
-        cout<<"5. Mostrar Arvore";
+        cout<<"5. Mostrar Arvore-B";
         changeColor(15);
     } else
-        cout<<endl<<"\t5. Mostrar Arvore";
+        cout<<endl<<"\t5. Mostrar Arvore-B";
 
     //Close the program
     if(menu==6){
@@ -147,15 +147,16 @@ void menuAction(int option, Library lib){
 
     // decides what to do
     switch(option){
-        //Create index
+        // Create index
         case 1:
-            cout<<endl<<"Funcao de Criar Indice, aperte ENTER para prosseguir.";
+            lib.generateIndex();
+            cout << "\nIndice criado com sucesso!\nPressione ENTER para continuar.";
             getchar();
             break;
 
-        //Insert Music
+        // Insert Music
         case 2: {
-            cout << endl << "Funcao de Inserir musica, insira as informacoes abaixo.\n";
+            cout << "\nFuncao de Inserir musica, insira as informacoes abaixo.\n";
             Song newSong;
 
             cout << "\nId da musica:\n";
@@ -169,24 +170,46 @@ void menuAction(int option, Library lib){
             getline(cin, newSong.genre);
 
             lib.insertSong(newSong);
-            cout << "\nMusica inserida com sucesso.\nAperte ENTER para prosseguir.";
+            cout << "\nMusica inserida com sucesso.\n\nPressione ENTER para continuar.";
             getchar();
 
             break;
         }
-        //Search Music
-        case 3:
-            cout<<endl<<"Funcao de Procurar uma Musica, aperte ENTER para prosseguir.";
+
+        // Search Music
+        case 3: {
+            cout << "\nFuncao de Procurar uma Musica.\n\nDigite o ID da musica procurada:\n";
+
+            int id;
+            cin >> id;
+            cin.ignore(1000, '\n');
+
+            Song song = lib.searchSong(id);
+
+            // verify if found the song
+            if (song.id == -1)
+                cout << "\nMusica nao encontrada.";
+            else {
+                cout << "\nMusica encontrada:"
+                     << "\n Id: " << song.id
+                     << "\n Titulo: " << song.title
+                     << "\n Genero: " << song.genre;
+            }
+
+            cout << "\n\nPressione ENTER para continuar.";
             getchar();
             break;
-        //Remove Music
+        }
+        // Remove Music
         case 4:
-            cout<<endl<<"Funcao de Remover uma Musica, aperte ENTER para prosseguir.";
+            cout << "\nFuncao de remocao nao implementada.\n\nPressione ENTER para continuar.";
             getchar();
             break;
-        //Show B tree
+
+        // Show B tree
         case 5:
-            cout<<endl<<"Funcao para Mostrar a B-tree, aperte ENTER para prosseguir.";
+            lib.showBTree();
+            cout << "\nArvore-B impressa no arquivo de log.\n\nPressione ENTER para continuar.";
             getchar();
             break;
     }
