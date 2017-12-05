@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
 
     // print finalization message
     changeColor(207);
-    cout<<endl<<"Programa finalizado!";
+    cout << "\n\nPrograma finalizado!\n";
     changeColor(15);
 
     return 0;
