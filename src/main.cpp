@@ -14,21 +14,83 @@ void TrocaCor(int x){
     SetConsoleTextAttribute(hConsole, x);
 }
 
+bool receveAndCheckSTRING(char checker[]){
+    int flag = false, i = 0;
+
+    while (checker[i] != '\0'){
+        if(!((checker[i] >= 'a' && checker[i] <= 'z') ||
+             (checker[i] >= 'A' && checker[i] <= 'Z') ||
+             (checker[i] >= '0' && checker[i] <= '9') ||
+              checker[i] == ' ')                        )   flag = true;
+        ++i;
+    }
+
+    return flag;
+
+}
+bool receveAndCheckINT(char checker[]){
+    int flag = false, i = 0;
+
+    while (checker[i] != '\0'){
+        if(!(checker[i] >= '0' && checker[i] <= '9'))   flag = true;
+        ++i;
+    }
+
+    return flag;
+
+}
 
 //menu management function
 void GerenciaMenu(int menu){
     system("cls");
+    int id;
+    int x = 0;
+    int flag;
+    char idchar[20];
+    char title[20];
+    char genre[20];
+
     //manages the menu from the menu variable
     switch(menu){
         //Create index
         case 1:
-            cout<<endl<<"Funcao de Criar Indice, aperte ENTER para prosseguir.";
-            getchar();
+            cout<<endl<<"Funcao de Criar Indice, aperte ENTER para prosseguir.\n";
+
+            getch();
         break;
         //Insert Music
         case 2:
-            cout<<endl<<"Funcao de Inserir Musica, aperte ENTER para prosseguir.";
+            cout<<endl<<"Funcao de Inserir Musica"<<endl
+            //Take music's ID
+            <<"Digite o numero inteiro referente ao ID da musica, depois o titulo da musica, e por fim o genero: "<<endl;
+            flag = true;
+            while(flag){
+                gets(idchar);
+                flag = receveAndCheckINT(idchar);
+                if (flag) cout <<"O id eh constituido por characteres invalidos. Digite novamente."<<endl;
+                else id = atoi(idchar);
+            }
             getchar();
+            //Take Music's title
+            flag = true;
+            while(flag){
+                fgets(title,20,stdin);
+                flag = receveAndCheckSTRING(title);
+                if (flag) cout <<"O titulo eh constituido por characteres invalidos. Digite novamente."<<endl;
+            }
+
+            //Take Music's genre
+            getchar();
+            flag = true;
+            while(flag){
+                fgets(genre,20,stdin);
+                flag = receveAndCheckSTRING(genre);
+                if (flag) cout <<"O genero da musica eh constituido por characteres invalidos. Digite novamente."<<endl;
+            }
+            cout<<endl<< "o id eh "<< id <<endl<< "o titulo eh "<< title <<endl<< "o genero eh "<< genre<<endl;
+
+
+            getch();
         break;
         //Search Music
         case 3:
@@ -37,8 +99,8 @@ void GerenciaMenu(int menu){
         break;
         //Remove Music
         case 4:
-            cout<<endl<<"Funcao de Remover uma Musica, aperte ENTER para prosseguir.";
-            getchar();
+            cout<<endl<<"Funcao de Remover uma Musica nao implementada ='[, aperte ENTER para prosseguir.";
+            getch();
         break;
         //Show B tree
         case 5:
@@ -50,6 +112,7 @@ void GerenciaMenu(int menu){
 
 
 }
+
 
 //Print Menu Function
 void PrintaMenu(int menu){
@@ -116,7 +179,7 @@ void PrintaMenu(int menu){
 int main(int argc, char *argv[]){
 
     //menu
-    Library lib;
+    //Library lib;
 
 
 
