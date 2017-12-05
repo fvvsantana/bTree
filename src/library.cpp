@@ -52,13 +52,13 @@ bool Library::generateIndex(){
 }
 
 //insert the song in the btree and in the datafile
-void Library::insertSong(Song song){
+bool Library::insertSong(Song song){
 
 	logFile->insertSongLog(song.id, song.title, song.genre);
-	//Verify if a song with song.id already esists
+	//Verify if a song with song.id already exists
 	if (tree->searchIndex(song.id) != -1){
 		logFile->insertDuplicated(song.id);
-		return;
+		return false;
 	}
 
 	//Creates a filestram
@@ -76,7 +76,7 @@ void Library::insertSong(Song song){
 	dFile.close();
 
 	tree->insertIndex(song.id, byteOS);
-
+    return true;
 }
 
 // search for a song and return it
@@ -88,6 +88,7 @@ Song Library::searchSong(key_t id){
 
 	song.id = -1;
 
+	// verify if index file exists
 	dFile.open(tree->getIndexFile().data(), fstream::in);
 	if (!dFile){
         logFile->emptyIndex();
@@ -101,14 +102,14 @@ Song Library::searchSong(key_t id){
 	//Search byte offset in index
 	int byteOS = tree->searchIndex(id);
 
-	//Verify if a song with song.id already exists
+	//Verify if the song does not exists
 	if (byteOS == -1){
 		logFile->searchFailLog(id);
 		song.id = -1;
 		return song;
 	}
 
-	//Open the file in append mode
+	//Open the file
 	dFile.open(dataFile.data(), fstream::in);
 	//Verify if data file exist
 	if (!dFile){

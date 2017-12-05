@@ -30,8 +30,7 @@ class Library{
 
         bool generateIndex();
 
-        //insert the song in the btree and in the datafile
-        void insertSong(Song song);
+        bool insertSong(Song song);
 
         Song searchSong(key_t id);
 

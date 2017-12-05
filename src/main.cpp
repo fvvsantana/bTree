@@ -183,8 +183,11 @@ void menuAction(int option, Library &lib){
             cout << "\nGenero da musica:\n";
             getline(cin, newSong.genre);
 
-            lib.insertSong(newSong);
-            cout << "\nMusica inserida com sucesso.\n\nPressione ENTER para continuar.";
+            if (lib.insertSong(newSong))
+                cout << "\nMusica inserida com sucesso.";
+            else
+                cout << "\nErro: ja existe uma musica com este Id no indice.";
+            cout << "\n\nPressione ENTER para continuar.";
             getchar();
 
             break;
