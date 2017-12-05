@@ -24,6 +24,9 @@ bool Library::generateIndex(){
 		return false;
 	}
 
+	// clear old index file
+	std::remove(tree->getIndexFile().c_str());
+
 	logFile->createIndexLog(tree->getIndexFile(), getDataFile());
 
 	int startRegisty, registrySize, id;
