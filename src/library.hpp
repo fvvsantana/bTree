@@ -29,7 +29,7 @@ class Library{
         //destructor
         ~Library();
 
-        void generateIndex();
+        bool generateIndex();
 
         //insert the song in the btree and in the datafile
         void insertSong(Song song);

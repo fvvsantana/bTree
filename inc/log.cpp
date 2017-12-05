@@ -18,7 +18,7 @@ void Log::writeLog(string text){
 			cerr << "Nao foi possivel criar o arquivo de log.\n";
 			return;
 		}
-		writeLog("Arquivo de log criado.");
+		writeLog("Arquivo de log criado.\n");
 	}
 	else{
 		lFile.close();
@@ -33,7 +33,7 @@ void Log::writeLog(string text){
 		  << setfill('0') << setw(2) << now->tm_hour << ':' 
 		  << setfill('0') << setw(2) << now->tm_min << ':'
 		  << setfill('0') << setw(2) << now->tm_sec << "   "
-		  << text.data() << "\n";
+		  << text.data();
 	//Close the file
 	lFile.close();
 }
@@ -41,7 +41,7 @@ void Log::writeLog(string text){
 void Log::createIndexLog(string index, string data){
 	ostringstream ss;
 
-	ss << "Execucao da criacao do arquivo de indice " << index << " com base no arquivo de dados " << data << '.';
+	ss << "Execucao da criacao do arquivo de indice " << index << " com base no arquivo de dados " << data << ".\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -49,7 +49,7 @@ void Log::createIndexLog(string index, string data){
 void Log::insertSongLog(int id, string title, string genre){
 	ostringstream ss;
 
-	ss << "Execucao de operacao de INSERCAO de no arquivo de dados de " << id << ", " << title << ", " << genre << '.';
+	ss << "Execucao de operacao de INSERCAO de no arquivo de dados de " << id << ", " << title << ", " << genre << ".\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -57,7 +57,7 @@ void Log::insertSongLog(int id, string title, string genre){
 void Log::nodeDivisionLog(int rrn){
 	ostringstream ss;
 
-	ss << "Divisao de no - " << rrn << " pagina.";
+	ss << "Divisao de no - " << rrn << " pagina.\n";
 
 	writeLog(ss.str().c_str());	
 }
@@ -65,7 +65,7 @@ void Log::nodeDivisionLog(int rrn){
 void Log::promotionLog(int id){
 	ostringstream ss;
 
-	ss << "Chave " << id << " promovida.";
+	ss << "Chave " << id << " promovida.\n";
 
 	writeLog(ss.str().c_str());	
 }
@@ -73,7 +73,7 @@ void Log::promotionLog(int id){
 void Log::insertSuccesLog(int id){
 	ostringstream ss;
 
-	ss << "Chave " << id << " inserida com sucesso.";
+	ss << "Chave " << id << " inserida com sucesso.\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -81,7 +81,7 @@ void Log::insertSuccesLog(int id){
 void Log::insertDuplicated(int id){
 	ostringstream ss;
 
-	ss << "Chave " << id << " duplicada.";
+	ss << "Chave " << id << " duplicada.\n";
 
 	writeLog(ss.str().c_str());
 
@@ -90,7 +90,7 @@ void Log::insertDuplicated(int id){
 void Log::searchLog(int id){
 	ostringstream ss;
 
-	ss << "Execucao de operacao de PESQUISA de " << id << '.';
+	ss << "Execucao de operacao de PESQUISA de " << id << ".\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -99,7 +99,7 @@ void Log::searchSuccesLog(int id, int byteOS, string title, string genre){
 	ostringstream ss;
 
 	ss << "Chave " << id << " encontrada, offset " << byteOS << ", Título: " 
-	   << title << ", Genero: " << genre << '.';
+	   << title << ", Genero: " << genre << ".\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -107,7 +107,7 @@ void Log::searchSuccesLog(int id, int byteOS, string title, string genre){
 void Log::searchFailLog(int id){
 	ostringstream ss;
 
-	ss << "Chave " << id << " nao encontrada.";
+	ss << "Chave " << id << " nao encontrada.\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -115,7 +115,7 @@ void Log::searchFailLog(int id){
 void Log::createFileErrorLog(){
 	ostringstream ss;
 
-	ss << "Nao foi possivel criar o arquivo de indice";
+	ss << "Nao foi possivel criar o arquivo de indice.\n";
 
 	writeLog(ss.str().c_str());
 }
@@ -123,7 +123,7 @@ void Log::createFileErrorLog(){
 void Log::emptyIndex(){
 	ostringstream ss;
 
-	ss << "O arquivo de indice não existe.";
+	ss << "O arquivo de indice não existe.\n";
 
 	writeLog(ss.str().c_str());	
 }
@@ -131,14 +131,14 @@ void Log::emptyIndex(){
 void Log::noDataFile(){
 	ostringstream ss;
 
-	ss << "O arquivo de dados não existe.";
+	ss << "O arquivo de dados não existe..\n";
 
 	writeLog(ss.str().c_str());	
 }
 void Log::insertIndex(int id){
 	ostringstream ss;
 
-	ss << "Execucao de operacao de INSERCAO no arquivos de indice de " << id << '.';
+	ss << "Execucao de operacao de INSERCAO no arquivos de indice de " << id << ".\n";
 
 	writeLog(ss.str().c_str());
 }

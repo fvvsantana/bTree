@@ -13,7 +13,7 @@ Library::~Library(){
     delete tree;
 }
 
-void Library::generateIndex(){
+bool Library::generateIndex(){
 	//Creat a filestrem
 	fstream dFile;
 	//Open the file in read mode
@@ -21,7 +21,7 @@ void Library::generateIndex(){
 	//Verify is data file exist
 	if (!dFile){
 		logFile->noDataFile();
-		return;
+		return false;
 	}
 
 	logFile->createIndexLog(tree->getIndexFile(), getDataFile());
@@ -47,6 +47,8 @@ void Library::generateIndex(){
 	}
 	//Close the file
 	dFile.close();
+
+	return true;
 }
 
 //insert the song in the btree and in the datafile
@@ -63,6 +65,7 @@ void Library::insertSong(Song song){
 	fstream dFile;
 	//Opens the file in append mode
 	dFile.open(dataFile.data(), fstream::app);
+	dFile.seekg(0, ios_base::end);
 	//Calculates the char amount
 	int size = integerDigits(song.id) + song.title.length() + song.genre.length() + 3;
 	//Writes on file
@@ -84,6 +87,9 @@ Song Library::searchSong(key_t id){
 	logFile->searchLog(id);
 	//Search byte offset in index
 	int byteOS = tree->searchIndex(id);
+
+	cout << id << ' ' << byteOS;
+
 	//Verify if a song with song.id already esists
 	if (byteOS == -1){
 		logFile->searchFailLog(id);
@@ -125,7 +131,7 @@ string Library::getDataFile(){
 int Library::integerDigits(int id){
 	int counter = 1;
 	while (id >= 10){
-		
+
 		id /= 10;
 		counter++;
 	}

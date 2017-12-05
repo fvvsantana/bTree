@@ -8,6 +8,8 @@ BTree::BTree(const char* url, Log* logFile){
 
 void BTree::insertIndex(key_t id, int byteOS){
 
+    logFile->insertIndex(id);
+
 	Index indexRecived;
 	indexRecived.key = id;
 	indexRecived.byteOS = byteOS;
@@ -400,6 +402,8 @@ BTree::Header BTree::readHeader() {
 }
 
 void BTree::printTree() {
+	ostringstream ss;
+
     // read the header
     Header header = readHeader();
     //Verify is index fil exist
@@ -409,7 +413,7 @@ void BTree::printTree() {
     }
 
     // print initial phrase
-    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
+    ss << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
 
     // create a queue of nodes to print
     Queue queue;
@@ -420,6 +424,8 @@ void BTree::printTree() {
     // print elements until queue is empty
     while (!queue.isEmpty()) {
 
+    	ss << setfill(' ') << setw(24) << ' ';
+
         // get first queue element
         int rrn, level;
         queue.pop(rrn, level);
@@ -428,15 +434,15 @@ void BTree::printTree() {
         Node node = readPage(rrn);
 
         // print page level
-        cout << level << ' ';
+        ss << level << ' ';
 
         // print number of elements
-        cout << node.nIndexes << ' ';
+        ss << node.nIndexes << ' ';
 
         // print each element
         for (int i = 0; i < node.nIndexes; i++)
-            cout << '<' << node.index[i].key << '/' << node.index[i].byteOS << "> ";
-        cout << endl;
+            ss << '<' << node.index[i].key << '/' << node.index[i].byteOS << "> ";
+        ss << endl;
 
         // add the children to the queue
         for (int i = 0; i <= node.nIndexes; i++) {
@@ -444,6 +450,7 @@ void BTree::printTree() {
                 queue.push(node.children[i], level+1);
         }
     }
+    logFile->writeLog(ss.str().c_str());
 }
 
 string BTree::getIndexFile(){
