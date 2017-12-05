@@ -14,7 +14,7 @@ Library::~Library(){
 }
 
 bool Library::generateIndex(){
-	//Creat a filestrem
+	//Create a filestrem
 	fstream dFile;
 	//Open the file in read mode
 	dFile.open(dataFile.data(), fstream::in);
@@ -31,7 +31,7 @@ bool Library::generateIndex(){
 
 	//Goes through the file
 	while(!dFile.eof()){
-		//Recive the registry size and a pipe
+		//Receive the registry size and a pipe
 		dFile >> registrySize >> pipe;
 		//Save the registry byteoffset
 		startRegisty = (int)dFile.tellg();
@@ -101,7 +101,7 @@ Song Library::searchSong(key_t id){
 	//Search byte offset in index
 	int byteOS = tree->searchIndex(id);
 
-	//Verify if a song with song.id already esists
+	//Verify if a song with song.id already exists
 	if (byteOS == -1){
 		logFile->searchFailLog(id);
 		song.id = -1;

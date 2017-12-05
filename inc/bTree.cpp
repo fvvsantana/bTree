@@ -28,7 +28,7 @@ void BTree::insertIndex(key_t id, int byteOS){
 			Node page;
 			//Initialize a page as leaf
 			createLeaf(page);
-			//Write the index recived on page
+			//Write the index received on page
 			page.index[0] = indexRecived;
 			//Increases number of elements
 			page.nIndexes++;
@@ -63,7 +63,7 @@ void BTree::insertIndex(key_t id, int byteOS){
 				newRoot.children[1] = promoChild;
 				//Increase the number of elements
 				newRoot.nIndexes++;
-				//Write the file and update the header with tthe new root
+				//Write the file and update the header with the new root
 				updateHeader(true, writePage(newRoot));
 			}
 			else if(insertReturn == -1){
@@ -211,7 +211,7 @@ int BTree::writePage(Node page){
 	return rrn;
 }
 
-//Initializate the page variables
+//Initialize the page variables
 void BTree::createLeaf(Node &page){
 
 	page.nIndexes = 0;
@@ -275,7 +275,7 @@ int BTree::insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild){
 		//If the page is not full, add the index
 		else if (page.nIndexes < BT_ORDER - 1){
 			int i = page.nIndexes;
-			//Shift the elemtents to right until the index position is empty
+			//Shift the elements to right until the index position is empty
 			while(i > 0 && page.index[i - 1].key > toAdd.key){
 				page.index[i] = page.index[i - 1];
 				page.children[i + 1] = page.children[i];
@@ -288,7 +288,7 @@ int BTree::insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild){
 			page.nIndexes++;
 			//write on file
 			writePage(page, rrn);
-			//retunr no promotion
+			//return no promotion
 			return 0;
 		}
 		//If promotion occurred
@@ -310,7 +310,7 @@ void BTree::split(Index &index, int &rrn, Node &page, Index &promoIndex, int &pr
 	Index extraIndex[BT_ORDER];
 	int extraChildren[BT_ORDER + 1];
 	int i;
-	//Copie the data os page to temporary arrays
+	//Copy the data from the page to temporary arrays
 	for (i = 0; i < page.nIndexes; i++){
 		extraIndex[i] = page.index[i];
 		extraChildren[i] = page.children[i];
@@ -390,7 +390,7 @@ BTree::Header BTree::readHeader() {
     // read the header
     Header header;
 	bTree.read((char*)&header, sizeof(header));
-    //Verify is index fil exist
+    //Verify if index file exists
 	if (!bTree){
     	header.rrnRoot = -1;
     	return header;
@@ -406,7 +406,7 @@ void BTree::printTree() {
 
     // read the header
     Header header = readHeader();
-    //Verify is index fil exist
+    //Verify if index file exists
     if(header.rrnRoot == -1){
     	logFile->emptyIndex();
     	return;
