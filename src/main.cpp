@@ -140,6 +140,17 @@ void printMenu(int menu){
         cout<<endl<<"\t6. Fechar o Programa";
 }
 
+int readNumber() {
+    int number;
+    while (! (cin >> number)) {
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "\nValor invalido, insira novamente.\n";
+    }
+    cin.ignore(1000, '\n');
+    return number;
+}
+
 // receive the selected menu option and behave accordingly
 void menuAction(int option, Library &lib){
     // clear screen
@@ -148,20 +159,22 @@ void menuAction(int option, Library &lib){
     // decides what to do
     switch(option){
         // Create index
-        case 1:
-            lib.generateIndex();
-            cout << "\nIndice criado com sucesso!\nPressione ENTER para continuar.";
+        case 1: {
+            if (lib.generateIndex())
+                cout << "\nIndice criado com sucesso!";
+            else
+                cout << "\nO indice nao foi criado pois nao existe um arquivo de dados.";
+            cout << "\n\nPressione ENTER para continuar.";
             getchar();
             break;
-
+        }
         // Insert Music
         case 2: {
             cout << "\nFuncao de Inserir musica, insira as informacoes abaixo.\n";
             Song newSong;
 
             cout << "\nId da musica:\n";
-            cin >> newSong.id;
-            cin.ignore(1000, '\n');
+            newSong.id = readNumber();
 
             cout << "\nTitulo da musica:\n";
             getline(cin, newSong.title);
@@ -180,9 +193,7 @@ void menuAction(int option, Library &lib){
         case 3: {
             cout << "\nFuncao de Procurar uma Musica.\n\nDigite o ID da musica procurada:\n";
 
-            int id;
-            cin >> id;
-            cin.ignore(1000, '\n');
+            int id = readNumber();
 
             Song song = lib.searchSong(id);
 

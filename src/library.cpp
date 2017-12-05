@@ -89,7 +89,7 @@ Song Library::searchSong(key_t id){
 	song.id = -1;
 
 	dFile.open(tree->getIndexFile().data(), fstream::in);
-	if (!dFile || tree->readHeader().updated == false){
+	if (!dFile){
         logFile->emptyIndex();
         if(!generateIndex()){
             return song;
@@ -133,6 +133,7 @@ Song Library::searchSong(key_t id){
 void Library::showBTree(){
     tree->printTree();
 }
+
 string Library::getDataFile(){
 	return dataFile;
 }
