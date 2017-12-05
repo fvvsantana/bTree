@@ -84,11 +84,22 @@ Song Library::searchSong(key_t id){
 	Song song;
 	char pipe;
 
+	fstream dFile;
+
+	song.id = -1;
+
+	dFile.open(tree->getIndexFile().data(), fstream::in);
+	if (!dFile || tree->readHeader().updated == false){
+        logFile->emptyIndex();
+        if(!generateIndex()){
+            return song;
+        }
+	}
+    dFile.close();
+
 	logFile->searchLog(id);
 	//Search byte offset in index
 	int byteOS = tree->searchIndex(id);
-
-	cout << id << ' ' << byteOS;
 
 	//Verify if a song with song.id already esists
 	if (byteOS == -1){
@@ -97,13 +108,11 @@ Song Library::searchSong(key_t id){
 		return song;
 	}
 
-	fstream dFile;
 	//Open the file in append mode
 	dFile.open(dataFile.data(), fstream::in);
 	//Verify if data file exist
 	if (!dFile){
 		logFile->noDataFile();
-		song.id = -1;
 		return song;
 	}
 	//Go to the specified byte offset

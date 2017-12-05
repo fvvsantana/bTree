@@ -131,7 +131,7 @@ void Log::emptyIndex(){
 void Log::noDataFile(){
 	ostringstream ss;
 
-	ss << "O arquivo de dados não existe..\n";
+	ss << "O arquivo de dados não existe.\n";
 
 	writeLog(ss.str().c_str());	
 }
