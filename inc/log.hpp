@@ -42,6 +42,13 @@ class Log{
 		void searchFailLog(int id);
 
 		void createFileErrorLog();
+
+		void emptyIndex();
+
+		void noDataFile();
+
+		void insertIndex(int id);
+
 };
 
 

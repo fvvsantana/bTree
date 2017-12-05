@@ -49,7 +49,7 @@ void Log::createIndexLog(string index, string data){
 void Log::insertSongLog(int id, string title, string genre){
 	ostringstream ss;
 
-	ss << "Execucao de operacao de INSERCAO de " << id << ", " << title << ", " << genre << '.';
+	ss << "Execucao de operacao de INSERCAO de no arquivo de dados de " << id << ", " << title << ", " << genre << '.';
 
 	writeLog(ss.str().c_str());
 }
@@ -116,6 +116,29 @@ void Log::createFileErrorLog(){
 	ostringstream ss;
 
 	ss << "Nao foi possivel criar o arquivo de indice";
+
+	writeLog(ss.str().c_str());
+}
+
+void Log::emptyIndex(){
+	ostringstream ss;
+
+	ss << "O arquivo de indice não existe.";
+
+	writeLog(ss.str().c_str());	
+}
+
+void Log::noDataFile(){
+	ostringstream ss;
+
+	ss << "O arquivo de dados não existe.";
+
+	writeLog(ss.str().c_str());	
+}
+void Log::insertIndex(int id){
+	ostringstream ss;
+
+	ss << "Execucao de operacao de INSERCAO no arquivos de indice de " << id << '.';
 
 	writeLog(ss.str().c_str());
 }

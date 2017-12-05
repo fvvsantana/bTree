@@ -12,6 +12,8 @@ void BTree::insertIndex(key_t id, int byteOS){
 	indexRecived.key = id;
 	indexRecived.byteOS = byteOS;
 
+	logFile->insertIndex(id);
+
 	switch(createFile()){
 		case -1:
 			logFile->createFileErrorLog();
@@ -159,6 +161,11 @@ BTree::Node BTree::readPage(int rrn){
 	Node page;
 
 	bTree.open(indexFile, fstream::in|fstream::binary);
+	//Verify is index file exist
+	if (!bTree){
+		page.nIndexes = -1;
+		return page;
+	}
 
 	bTree.seekg(sizeof(Header) + rrn * sizeof(Node), ios_base::beg);
 
@@ -254,11 +261,8 @@ int BTree::insert(int rrn, Index &toAdd, Index &promoIndex, int &promoChild){
 
 		page = readPage(rrn);
 		//Search for the position of the new index
-		//while (pos < page.nIndexes && page.index[pos].key < toAdd.key)
-			//pos++;
-		binarySearch(page, toAdd.key, pos);
 		//If an index with the requested key already exists, returns erro
-		if (page.index[pos].key == toAdd.key)
+		if (binarySearch(page, toAdd.key, pos))
 			return -1;
 		//Recursion to the next page
 		returnValue = insert(page.children[pos], toAdd, promoBottomIndex, promoBottomChild);
@@ -383,18 +387,29 @@ BTree::Header BTree::readHeader() {
 
     // read the header
     Header header;
-    bTree.read((char*)&header, sizeof(header));
+	bTree.read((char*)&header, sizeof(header));
+    //Verify is index fil exist
+	if (!bTree){
+    	header.rrnRoot = -1;
+    	return header;
+    }
+
     bTree.close();
 
     return header;
 }
 
 void BTree::printTree() {
-    // print initial phrase
-    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
-
     // read the header
     Header header = readHeader();
+    //Verify is index fil exist
+    if(header.rrnRoot == -1){
+    	logFile->emptyIndex();
+    	return;
+    }
+
+    // print initial phrase
+    cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
 
     // create a queue of nodes to print
     Queue queue;

@@ -18,6 +18,11 @@ void Library::generateIndex(){
 	fstream dFile;
 	//Open the file in read mode
 	dFile.open(dataFile.data(), fstream::in);
+	//Verify is data file exist
+	if (!dFile){
+		logFile->noDataFile();
+		return;
+	}
 
 	logFile->createIndexLog(tree->getIndexFile(), getDataFile());
 
@@ -39,8 +44,6 @@ void Library::generateIndex(){
 		tree->insertIndex(id, startRegisty);
 		//Go to the next registry
 		dFile.seekg(registrySize - dFile.tellg() + startRegisty , ios_base::cur);
-
-		cout << (int)dFile.tellg() << '\n';
 	}
 	//Close the file
 	dFile.close();
@@ -50,8 +53,8 @@ void Library::generateIndex(){
 void Library::insertSong(Song song){
 
 	logFile->insertSongLog(song.id, song.title, song.genre);
-
-	if (tree->searchIndex(song.id) == -1){
+	//Verify if a song with song.id already esists
+	if (tree->searchIndex(song.id) != -1){
 		logFile->insertDuplicated(song.id);
 		return;
 	}
@@ -81,7 +84,7 @@ Song Library::searchSong(key_t id){
 	logFile->searchLog(id);
 	//Search byte offset in index
 	int byteOS = tree->searchIndex(id);
-
+	//Verify if a song with song.id already esists
 	if (byteOS == -1){
 		logFile->searchFailLog(id);
 		song.id = -1;
@@ -89,8 +92,14 @@ Song Library::searchSong(key_t id){
 	}
 
 	fstream dFile;
-	//Opens the file in append mode
+	//Open the file in append mode
 	dFile.open(dataFile.data(), fstream::in);
+	//Verify if data file exist
+	if (!dFile){
+		logFile->noDataFile();
+		song.id = -1;
+		return song;
+	}
 	//Go to the specified byte offset
 	dFile.seekg(byteOS, ios_base::beg);
 	//Read the song information
