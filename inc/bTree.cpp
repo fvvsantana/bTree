@@ -393,7 +393,6 @@ void BTree::printTree() {
     // print initial phrase
     cout << "Execucao de operacao para mostrar a arvore-B gerada:" << endl;
 
-<<<<<<<
     // read the header
     Header header = readHeader();
 
@@ -432,10 +431,7 @@ void BTree::printTree() {
     }
 }
 
-=======
 string BTree::getIndexFile(){
 	string url(indexFile);
 	return url;
 }
-
->>>>>>>

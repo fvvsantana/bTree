@@ -88,6 +88,8 @@ class BTree{
 
         bool binarySearch(Node page, int key, int &pos);
 
+        void printTree();
+
         string getIndexFile();
 };
 

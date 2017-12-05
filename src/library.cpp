@@ -9,6 +9,7 @@ Library::Library(){
 
 //destructor
 Library::~Library(){
+    delete logFile;
     delete tree;
 }
 
