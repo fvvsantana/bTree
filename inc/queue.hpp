@@ -9,6 +9,7 @@ private:
     // number of elements on queue
     int size;
 
+    // each queue element will be a NodeInfo object, containing the rrn and the level of a node
     typedef struct NodeInfo {
         int rrn;
         int level;

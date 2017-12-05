@@ -14,7 +14,7 @@ void menuAction(int menu, Library &lib);
 // main is responsible for receiving user input and calling library methods
 int main(int argc, char *argv[]){
 
-    // Library managing file operations
+    // Library object that will manage file operations
     Library lib;
 
     // menu variables
@@ -140,6 +140,7 @@ void printMenu(int menu){
         cout<<endl<<"\t6. Fechar o Programa";
 }
 
+// read a numeric value from user input
 int readNumber() {
     int number;
     while (! (cin >> number)) {

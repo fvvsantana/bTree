@@ -15,12 +15,12 @@ using namespace std;
 class Log{
     private:
 		string logFile;
-    
+
     public:
     	//Constructor
     	Log(string directory);
 
-    	//Write a text in the log 
+    	//Write a text in the log
     	void writeLog(string text);
 
     	void createIndexLog(string index, string data);
@@ -50,6 +50,5 @@ class Log{
 		void insertIndex(int id);
 
 };
-
 
 #endif /* end of include guard: LOG_HPP */

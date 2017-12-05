@@ -46,6 +46,7 @@ class BTree{
         //index file url
         const char* indexFile;
 
+        //Log object
         Log *logFile;
 
         //rrn of tree root node
@@ -58,7 +59,6 @@ class BTree{
 
         void insertIndex(key_t id, int byteOS);
 
-        //return the byte offset of the searched block in the datafile
         int searchIndex(key_t id);
 
         void updateHeader(bool updated, int root);

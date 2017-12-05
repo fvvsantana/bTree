@@ -1,11 +1,11 @@
 #include "log.hpp"
 
-
+// constructor
 Log::Log(string directory){
 	logFile = directory;
 }
 
-
+// write the received text to the file with time information
 void Log::writeLog(string text){
 	//Create a files stream
 	fstream lFile;

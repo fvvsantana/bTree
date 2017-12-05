@@ -9,7 +9,6 @@
 
 typedef int key_t;
 
-
 typedef struct{
     key_t id;
     string title;

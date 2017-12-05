@@ -6,6 +6,7 @@ BTree::BTree(const char* url, Log* logFile){
     this->logFile = logFile;
 }
 
+// insert a key into the tree
 void BTree::insertIndex(key_t id, int byteOS){
 
     logFile->insertIndex(id);
@@ -382,6 +383,7 @@ bool BTree::binarySearch(Node page, int key, int &pos){
 	return false;
 }
 
+// read the tree header from file and return it
 BTree::Header BTree::readHeader() {
     // open the file
     fstream bTree;
@@ -401,6 +403,7 @@ BTree::Header BTree::readHeader() {
     return header;
 }
 
+// print the tree to the log file
 void BTree::printTree() {
 	ostringstream ss;
 
@@ -453,6 +456,7 @@ void BTree::printTree() {
     logFile->writeLog(ss.str().c_str());
 }
 
+// return index file path
 string BTree::getIndexFile(){
 	string url(indexFile);
 	return url;

@@ -79,7 +79,7 @@ void Library::insertSong(Song song){
 
 }
 
-
+// search for a song and return it
 Song Library::searchSong(key_t id){
 	Song song;
 	char pipe;
@@ -130,14 +130,17 @@ Song Library::searchSong(key_t id){
 
 }
 
+// call btree method to print itself
 void Library::showBTree(){
     tree->printTree();
 }
 
+// return data file path
 string Library::getDataFile(){
 	return dataFile;
 }
 
+// count how many digits an integer have
 int Library::integerDigits(int id){
 	int counter = 1;
 	while (id >= 10){
