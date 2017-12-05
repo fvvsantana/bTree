@@ -9,7 +9,7 @@ using namespace std;
 // function prototypes
 void changeColor(int color);
 void printMenu(int menu);
-void menuAction(int menu, Library lib);
+void menuAction(int menu, Library &lib);
 
 // main is responsible for receiving user input and calling library methods
 int main(int argc, char *argv[]){
@@ -141,7 +141,7 @@ void printMenu(int menu){
 }
 
 // receive the selected menu option and behave accordingly
-void menuAction(int option, Library lib){
+void menuAction(int option, Library &lib){
     // clear screen
     system("cls");
 
