@@ -19,7 +19,7 @@ class BTree{
     private:
 
         typedef struct{
-            //indicate if the index is updated regarding to the datafile
+            //indicate if the index is updated regarding the datafile
             bool updated;
             //store rrn root
             int rrnRoot;
